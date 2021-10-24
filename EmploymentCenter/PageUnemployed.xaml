@@ -1,0 +1,79 @@
+﻿<Page x:Class="EmploymentCenter.PageUnemployed"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EmploymentCenter"
+        mc:Ignorable="d"
+         Title="Специальности" Height="603" Width="839">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="563*"/>
+            <ColumnDefinition Width="276*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListView ItemsSource="{Binding Unemployeds}" SelectedItem="{Binding SelectedUnemployed}" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding FIO}"/>
+                    <GridViewColumn Header="Контакты" DisplayMemberBinding="{Binding Contact}"/>
+                    <GridViewColumn Header="Специальность" DisplayMemberBinding="{Binding Specialty}"/>
+                    <GridViewColumn Header="Опыт работы" DisplayMemberBinding="{Binding Experience}"/>
+                    <GridViewColumn Header="Дата рождения" DisplayMemberBinding="{Binding Birthday}"/>
+                    <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding ResultUnemployed}"/>
+                </GridView>
+            </ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить" Command="{Binding DeleteUnemployed}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel >
+                <TextBlock Text="ФИО:"/>
+                <TextBox Text="{Binding SelectedUnemployed.FIO}" />
+
+                <TextBlock Text="Дата рождения:"/>
+                <DatePicker  SelectedDateFormat="Short" SelectedDate="{Binding SelectedUnemployed.Birthday}" />
+
+                <TextBlock Text="Пол:"/>
+                <ComboBox SelectedValue="{Binding SelectedUnemployed.Male}" SelectedValuePath="Value" DisplayMemberPath="Name" ItemsSource="{Binding Males}"/>
+
+                <TextBlock Text="Специальность:"/>
+                <TextBox Text="{Binding SelectedUnemployed.Specialty}" />
+
+                <TextBlock Text="Адрес проживания:"/>
+                <TextBox Text="{Binding SelectedUnemployed.Address}"/>
+
+                <TextBlock Text="Образование:"/>
+                <ComboBox ItemsSource="{Binding Educations}"  SelectedItem="{Binding SelectedUnemployed.Education}" />
+
+                <TextBlock Text="Контакты:"/>
+                <TextBox Text="{Binding SelectedUnemployed.Contact}" />
+
+                <TextBlock Text="Опыт работы:"/>
+                <TextBox Text="{Binding SelectedUnemployed.Experience}"/>
+
+                <TextBlock Text="Проф. сфера:"/>
+                <ComboBox ItemsSource="{Binding ProfeccionalAreas}" SelectedItem="{Binding SelectedUnemployed.ProfeccionalArea}" DisplayMemberPath="Name" />
+
+                <TextBlock Text="Вы проходили у нас курсы по профессиям? Если да, то укажите какие"/>
+                <ComboBox ItemsSource="{Binding Courses}" SelectedItem="{Binding SelectedUnemployed.Course}" DisplayMemberPath="Name"/>
+
+                <Button Content="Новая заявка" Command="{Binding AddUnemployed}" />
+                <Button Content="Удалить" Command="{Binding DeleteUnemployed}"/>
+                <Button Content="Принять" Command="{Binding SaveUnemployed}"/>
+            </StackPanel>
+
+        </Grid>
+
+    </Grid>
+</Page>

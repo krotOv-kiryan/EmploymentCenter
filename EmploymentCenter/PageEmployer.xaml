@@ -1,0 +1,91 @@
+﻿<Page x:Class="EmploymentCenter.PageEmployer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EmploymentCenter"
+        mc:Ignorable="d"
+        Title="Работодатель" Height="584" Width="900">
+    <!--Обращение работодателя в службу занятости.
+  Создаём работу с необходимыми параметрами( а то и больше, чем одну) и ждём, пока откликнется безработный.-->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="43*"/>
+            <ColumnDefinition Width="17*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListView Grid.Column="0" ItemsSource="{Binding Vacancies}" SelectedItem="{Binding SelectedVacancy}" Margin="2,0,2,0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Сфера" DisplayMemberBinding="{Binding ProfeccionalArea.Name}"/>
+                    <GridViewColumn Header="Фирма" DisplayMemberBinding="{Binding Firm}"/>
+                    <GridViewColumn Header="Занятость" DisplayMemberBinding="{Binding Schedule}"/>
+                    <GridViewColumn Header="Опыт работы" DisplayMemberBinding="{Binding Experience}"/>
+                    <GridViewColumn Header="Образование" DisplayMemberBinding="{Binding Education}"/>
+                    <GridViewColumn Header="Контакты" DisplayMemberBinding="{Binding Contact}"/>
+                    <GridViewColumn Header="id" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding ResultVacancy}"/>
+                </GridView>
+            </ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить" Command="{Binding DeleteVacancy}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="                      Данные вакансии"/>
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="Название"/>
+                <TextBox Text="{Binding SelectedVacancy.Name}"/>
+
+                <TextBlock Text="Название фирмы"/>
+                <TextBox Text="{Binding SelectedVacancy.Firm}"/>
+
+                <TextBlock Text="Проф. сфера"/>
+                <ComboBox ItemsSource="{Binding ProfeccionalAreas}" SelectedItem="{Binding SelectedVacancy.ProfeccionalArea}" DisplayMemberPath="Name" />
+
+
+                <TextBlock Text="Занятость:"/>
+                <ComboBox SelectedItem="{Binding SelectedVacancy.Employment}" ItemsSource="{Binding Employments}"/>
+
+                <TextBlock Text="График работы:"/>
+                <ComboBox SelectedItem="{Binding SelectedVacancy.Schedule}" ItemsSource="{Binding Schedules}"/>
+
+
+                <TextBlock Text="Специальность:"/>
+                <TextBox Text="{Binding SelectedVacancy.Specialty}" />
+
+                <TextBlock Text="Зарплата (в рублях):"/>
+                <TextBox Text="{Binding SelectedVacancy.Salary}"/>
+
+                <TextBlock Text="Требуемый опыт работы:"/>
+                <TextBox Text="{Binding SelectedVacancy.Experience}"/>
+
+
+                <TextBlock Text="Требуемое образование:"/>
+                <ComboBox SelectedItem="{Binding SelectedVacancy.Education}" ItemsSource="{Binding Educations}"/>
+
+                <TextBlock Text="Предоставляемая должность:"/>
+                <TextBox Text="{Binding SelectedVacancy.Position}"/>
+
+                <TextBlock Text="Контактные данные:"/>
+                <TextBox Text="{Binding SelectedVacancy.Contact}"/>
+
+                <Button VerticalAlignment="Center" Content="Новая вакансия" Command="{Binding AddVacancy}" />
+                <Button VerticalAlignment="Center" Content="Удалить" Command="{Binding DeleteVacancy}" />
+                <Button VerticalAlignment="Center" Content="Принять" Command="{Binding SaveVacancy}"/>
+            </StackPanel>
+
+        </Grid>
+
+    </Grid>
+</Page>
